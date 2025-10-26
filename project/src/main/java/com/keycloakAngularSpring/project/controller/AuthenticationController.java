@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.keycloakAngularSpring.project.dto.AuthenticationRequest;
 import com.keycloakAngularSpring.project.dto.RegistrationRequest;
 import com.keycloakAngularSpring.project.services.AuthenticationService;
 
@@ -34,5 +35,9 @@ public class AuthenticationController {
         return ResponseEntity.accepted().build();
     }
 
-    
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> authenticate(@RequestBody @Valid AuthenticationRequest request) throws MessagingException{
+        return ResponseEntity.ok(service.authenticate(request));
+    }
+
 }
