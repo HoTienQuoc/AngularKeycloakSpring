@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -40,4 +43,8 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
+    @GetMapping("/activate-account")
+    public void confirm(@RequestParam String token) throws MessagingException {
+        service.activateAccount(token);
+    }
 }
