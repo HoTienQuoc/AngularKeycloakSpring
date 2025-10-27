@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 
 @SpringBootApplication
-@EnableJpaAuditing  // ✅ Correct spelling
+@EnableJpaAuditing(auditorAwareRef="auditorAware")  // ✅ Correct spelling
 @EnableAsync
 public class ProjectApplication {
 
