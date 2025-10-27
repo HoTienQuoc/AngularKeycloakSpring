@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.keycloakAngularSpring.project.dto.BookRequest;
 import com.keycloakAngularSpring.project.dto.BookResponse;
+import com.keycloakAngularSpring.project.dto.PageResponse;
 import com.keycloakAngularSpring.project.services.BookService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,5 +41,13 @@ public class BookController {
     public ResponseEntity<BookResponse> findBookById(@PathVariable("book-id") Integer bookId) {
         return ResponseEntity.ok(service.findById(bookId));
     }
-    
+
+    @GetMapping("path")
+    public ResponseEntity<PageResponse<BookResponse>> findAllBooks(
+        @RequestParam(name="page", defaultValue="0", required=false) int page,
+        @RequestParam(name="size", defaultValue="10", required=false) int size,
+        Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(service.findAllBooks(page,size,connectedUser));
+    }
 }
