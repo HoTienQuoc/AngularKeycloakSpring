@@ -3,7 +3,12 @@ package com.keycloakAngularSpring.project.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.keycloakAngularSpring.project.dto.BookRequest;
+import com.keycloakAngularSpring.project.dto.BookResponse;
+import com.keycloakAngularSpring.project.services.BookService;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -11,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @RestController
@@ -20,12 +28,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BookController {
     private final BookService service;
 
-    @PostMapping("path")
+    @PostMapping()
     public ResponseEntity<Integer> saveBook(
         @Valid @RequestBody BookRequest request,
         Authentication connectedUser
     ) {
         return ResponseEntity.ok(service.save(request, connectedUser));
+    }
+
+    @GetMapping("{book-id}")
+    public ResponseEntity<BookResponse> findBookById(@PathVariable("book-id") Integer bookId) {
+        return ResponseEntity.ok(service.findById(bookId));
     }
     
 }

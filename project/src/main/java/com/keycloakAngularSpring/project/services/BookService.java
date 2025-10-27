@@ -4,10 +4,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.keycloakAngularSpring.project.dto.BookRequest;
+import com.keycloakAngularSpring.project.dto.BookResponse;
 import com.keycloakAngularSpring.project.entity.Book;
 import com.keycloakAngularSpring.project.entity.User;
 import com.keycloakAngularSpring.project.repository.BookRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,5 +22,10 @@ public class BookService {
         Book book = bookMapper.toBook(request);
         book.setOwner(user);
         return bookRepository.save(book).getId();
+    }
+    public BookResponse findById(Integer bookId) {
+        return bookRepository.findById(bookId)
+            .map(bookMapper::toBookResponse)
+            .orElseThrow(()-> new EntityNotFoundException("No book found with the Id: "+ bookId));
     }
 }
