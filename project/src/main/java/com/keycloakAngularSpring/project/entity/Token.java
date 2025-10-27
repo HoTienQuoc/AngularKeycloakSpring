@@ -38,4 +38,8 @@ public class Token {
     @ManyToOne
     @JoinColumn(name="userId", nullable=false)
     private User user;
+
+    public void setValidateAt(LocalDateTime now) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

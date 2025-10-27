@@ -3,7 +3,6 @@ package com.keycloakAngularSpring.project.entity;
 import com.keycloakAngularSpring.project.entity.common.BaseEntity;
 
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 public class BookTransactionHistory extends BaseEntity {
