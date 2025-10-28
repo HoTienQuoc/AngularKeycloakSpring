@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.keycloakAngularSpring.project.dto.BookRequest;
 import com.keycloakAngularSpring.project.dto.BookResponse;
+import com.keycloakAngularSpring.project.dto.BorrowedBookResponse;
 import com.keycloakAngularSpring.project.entity.Book;
+import com.keycloakAngularSpring.project.entity.BookTransactionHistory;
 
 @Service
 public class BookMapper {
@@ -30,6 +32,18 @@ public class BookMapper {
             .archived(book.isArchived())
             .shareable(book.isShareable())
             .owner(book.getOwner().fullName())
+            .build();
+    }
+
+    public BorrowedBookResponse toBorrowedBookResponse(BookTransactionHistory history){
+        return BorrowedBookResponse.builder()
+            .id(history.getBook().getId())
+            .title(history.getBook().getTitle())
+            .authorName(history.getBook().getAuthorName())
+            .isbn(history.getBook().getIsbn())
+            .rate(history.getBook().getRate())
+            .returned(history.isReturned())
+            .returnApproved(history.isReturnApproved())
             .build();
     }
 }
