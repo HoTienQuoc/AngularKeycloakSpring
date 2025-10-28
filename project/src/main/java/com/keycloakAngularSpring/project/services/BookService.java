@@ -17,6 +17,7 @@ import com.keycloakAngularSpring.project.dto.BookRequest;
 import com.keycloakAngularSpring.project.dto.BookResponse;
 import com.keycloakAngularSpring.project.dto.PageResponse;
 import com.keycloakAngularSpring.project.entity.Book;
+import static com.keycloakAngularSpring.project.entity.BookSpecification.withOwnerId;
 import com.keycloakAngularSpring.project.entity.User;
 import com.keycloakAngularSpring.project.repository.BookRepository;
 
@@ -56,5 +57,11 @@ public class BookService {
             books.isFirst(),
             books.isLast()
         );
+    }
+    public PageResponse<BookResponse> findAllBooksByOwner(int page, int size, Authentication connectedUser) {
+        User user = ((User) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page,size,Sort.by("createdDate").descending());
+        Page<Book> books = bookRepository.findAll(withOwnerId(user.getId()),pageable);
+        return null;
     }
 }
