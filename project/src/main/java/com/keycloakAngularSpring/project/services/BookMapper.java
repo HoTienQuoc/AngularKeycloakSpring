@@ -7,6 +7,7 @@ import com.keycloakAngularSpring.project.dto.BookResponse;
 import com.keycloakAngularSpring.project.dto.BorrowedBookResponse;
 import com.keycloakAngularSpring.project.entity.Book;
 import com.keycloakAngularSpring.project.entity.BookTransactionHistory;
+import com.keycloakAngularSpring.project.utils.FileUtils;
 
 @Service
 public class BookMapper {
@@ -32,6 +33,7 @@ public class BookMapper {
             .archived(book.isArchived())
             .shareable(book.isShareable())
             .owner(book.getOwner().fullName())
+            .cover(FileUtils.readFileFromLocation(book.getBookCover()))
             .build();
     }
 

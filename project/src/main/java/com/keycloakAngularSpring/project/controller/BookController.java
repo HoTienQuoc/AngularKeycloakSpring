@@ -2,6 +2,7 @@ package com.keycloakAngularSpring.project.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.keycloakAngularSpring.project.dto.BookRequest;
 import com.keycloakAngularSpring.project.dto.BookResponse;
@@ -12,11 +13,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -114,12 +117,24 @@ public class BookController {
     }
 
     @PatchMapping("/borrow/return/approve/{book-id}")
-    public ResponseEntity<Integer> approveReturnBorrowedBook(
+    public ResponseEntity<Integer> approveReturnBorrowBook(
         @PathVariable("book-id") Integer bookId,
         Authentication connectedUser
     ) {
         return ResponseEntity.ok(service.approveReturnBorrowedBook(bookId,connectedUser));
     }
+
+    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverPicture(
+            @PathVariable("book-id") Integer bookId,
+            @Parameter()
+            @RequestPart("file") MultipartFile file,
+            Authentication connectedUser
+    ) {
+        service.uploadBookCoverPicture(file, connectedUser, bookId);
+        return ResponseEntity.accepted().build();
+    }
+
 }
 
 
