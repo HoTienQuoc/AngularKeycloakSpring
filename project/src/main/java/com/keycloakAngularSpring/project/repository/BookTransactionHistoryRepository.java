@@ -65,4 +65,5 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
     """)
     Page<BookTransactionHistory> findAllReturnedBooks(Pageable pageable, String userId);
 
+
 }
